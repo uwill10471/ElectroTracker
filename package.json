@@ -8,7 +8,7 @@
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "dev:backend": "nodemon Backend/index.js",
     "dev:frontend": "npm run dev --prefix Frontend",
-    "build": "npm install --prefix Frontend && npm run build --prefix Frontend",
+    "build": "npm install && npm install --prefix Frontend && npm run build --prefix Frontend",
     "start": "node Backend/index.js",
     "heroku-postbuild": "npm run build"
   },
