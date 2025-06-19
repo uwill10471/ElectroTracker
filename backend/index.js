@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 const path = require('path');
+const { fileURLToPath } = require('url');
+
+const { dirname, join, resolve } = path;
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -11,8 +14,12 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+
+
+
+
 // MongoDB connection
-const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://idontknowanything1:Wlbo3ICrgetCZk@cluster0.ll76e.mongodb.neT/lucknowDB?retryWrites=true&w=majority';
+const mongoURI = process.env.MONGODB_URI ;
 
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
@@ -92,15 +99,11 @@ app.get('/api/events/:id/registrations', async (req, res) => {
   }
 });
 
-// Serve static files from the frontend
-const distPath = path.join(__dirname, 'dist');
-app.use(express.static(distPath));
+app.use(express.static(path.resolve(__dirname, '../frontend/dist')));
 
-// Catch-all: serve index.html for any unknown route (for React Router)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(distPath, 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../frontend/dist', 'index.html'));
 });
-
 app.get('/', (req, res) => {
   res.send('E-Waste Drop Initiative API');
 });
